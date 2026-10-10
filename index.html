@@ -1,0 +1,467 @@
+<title>제주 스노클링 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* Layout: 고정 상단 메뉴 → 첫 화면(사고 통계) → 시작 전 Q&A → 언제 갈까·안전수칙 → 준비물·체크리스트 → 장소 탐색(검색·필터·상세) → 출처 */
+:root{
+  --bg:#f3f6f5; --surface:#ffffff; --fg:#17242a; --muted:#5b6b70; --line:#d6e0df;
+  --sea:#0b7a83; --sea-soft:#dcefef; --deep:#0d3b45; --on-deep:#e8f4f4;
+  --ok:#1f7a4a; --ok-soft:#e1f2e8; --unk:#8a6a12; --unk-soft:#f6edd2; --warn:#b03a2e; --warn-soft:#f8e3df;
+  --display:"Do Hyeon","IBM Plex Sans KR",system-ui,sans-serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1719; --surface:#172225; --fg:#e4ecec; --muted:#97a8ab; --line:#2a3a3e;
+  --sea:#4cc3cc; --sea-soft:#163a3d; --deep:#0a2a31; --on-deep:#d9eeee;
+  --ok:#6fd39c; --ok-soft:#173327; --unk:#e2c062; --unk-soft:#3a3118; --warn:#f08a7c; --warn-soft:#3d1f1b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1719; --surface:#172225; --fg:#e4ecec; --muted:#97a8ab; --line:#2a3a3e;
+  --sea:#4cc3cc; --sea-soft:#163a3d; --deep:#0a2a31; --on-deep:#d9eeee;
+  --ok:#6fd39c; --ok-soft:#173327; --unk:#e2c062; --unk-soft:#3a3118; --warn:#f08a7c; --warn-soft:#3d1f1b; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65}
+a{color:var(--sea)}
+.wrap{max-width:960px;margin:0 auto;padding-inline:16px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--sea);font-weight:600}
+p{margin:0}
+.muted{color:var(--muted)}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;align-items:center;padding-block:10px;overflow-x:auto}
+nav .brand{font-family:var(--display);font-size:19px;margin-right:auto;white-space:nowrap;color:var(--fg);text-decoration:none}
+nav a.link{font-size:14px;text-decoration:none;color:var(--muted);padding:6px 10px;border-radius:6px;white-space:nowrap}
+nav a.link:hover{background:var(--sea-soft);color:var(--fg)}
+
+/* hero */
+.hero{background:var(--deep);color:var(--on-deep);position:relative;overflow:hidden;isolation:isolate}
+/* 배경: 사진으로 바꿀 때는 .hero-bg 안의 svg를 <img src="..." alt=""> 로 교체 (object-fit:cover 적용됨) */
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg svg,.hero-bg img{width:100%;height:100%;display:block;object-fit:cover;max-width:none}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,rgba(4,22,27,.88) 0%,rgba(4,22,27,.6) 45%,rgba(4,22,27,.15) 100%),
+             linear-gradient(0deg,rgba(4,22,27,.55) 0%,rgba(4,22,27,0) 40%)}
+@media (max-width:640px){.hero::before{background:linear-gradient(0deg,rgba(4,22,27,.92) 0%,rgba(4,22,27,.7) 55%,rgba(4,22,27,.35) 100%)}}
+.hero .wrap{padding-block:72px 44px;display:grid;gap:20px}
+.hero h1,.hero p{text-shadow:0 1px 12px rgba(0,0,0,.35)}
+@media (prefers-reduced-motion:no-preference){.hero-bg .bub{animation:rise 7s linear infinite}.hero-bg .bub:nth-child(2n){animation-duration:9s;animation-delay:-3s}.hero-bg .bub:nth-child(3n){animation-duration:11s;animation-delay:-6s}}
+@keyframes rise{from{transform:translateY(0);opacity:.7}to{transform:translateY(-360px);opacity:0}}
+.hero h1{font-size:clamp(34px,7vw,56px)}
+.hero .eyebrow{color:var(--on-deep);opacity:.75}
+.hero p.lede{max-width:56ch;opacity:.9}
+.stat{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;border-top:1px solid color-mix(in srgb,var(--on-deep) 25%,transparent);padding-top:18px}
+.stat .num{font-family:var(--display);font-size:48px;line-height:1;font-variant-numeric:tabular-nums}
+.stat .num small{font-size:20px;opacity:.7}
+.stat .cap{max-width:42ch;font-size:14px;opacity:.85}
+.cta{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:inherit;font-size:14px;font-weight:500;padding:9px 16px;border-radius:999px;text-decoration:none;border:1px solid var(--on-deep);color:var(--on-deep)}
+.btn.primary{background:var(--on-deep);color:var(--deep)}
+
+section.block .wrap{padding-block:48px 8px;display:grid;gap:20px}
+.head{display:grid;gap:6px}
+.head h2{font-size:clamp(26px,5vw,34px)}
+.head p{color:var(--muted);max-width:62ch}
+
+/* qa */
+.qa{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:10px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+summary{cursor:pointer;font-weight:600;font-size:16px;list-style:none;display:flex;gap:10px;align-items:baseline}
+summary::-webkit-details-marker{display:none}
+summary .q{font-family:var(--display);color:var(--sea);font-size:20px;font-weight:400}
+summary::after{content:"+";margin-left:auto;color:var(--muted)}
+details[open] summary::after{content:"−"}
+details .a{margin-top:10px;display:grid;gap:6px;color:var(--fg)}
+details .a .rule{font-size:14px;color:var(--muted)}
+
+/* conditions */
+.cond{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.cond .c{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:4px;align-content:start}
+.cond .c .k{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.cond .c .v{font-family:var(--display);font-size:26px;line-height:1.2}
+.cond .c .d{font-size:14px;color:var(--muted)}
+.tide{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px}
+.tide svg{width:100%;height:auto;max-width:100%;display:block}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:8px;margin:0;padding:0;list-style:none}
+.rules li{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.rules .ic{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:13px}
+.rules .do .ic{background:var(--ok-soft);color:var(--ok)}
+.rules .dont .ic{background:var(--warn-soft);color:var(--warn)}
+
+/* gear */
+.gear{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:10px;align-items:start}
+.gcol{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px}
+.gcol h3{font-size:20px;display:flex;gap:8px;align-items:center}
+.gcol .badge{font-family:var(--body);font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
+.b-must{background:var(--warn-soft);color:var(--warn)}
+.b-rent{background:var(--sea-soft);color:var(--sea)}
+.b-opt{background:var(--line);color:var(--muted)}
+.gcol label{display:flex;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line);cursor:pointer}
+.gcol input[type=checkbox]{width:18px;height:18px;accent-color:var(--sea);flex:none}
+.gcol label:has(input:checked) span{color:var(--muted);text-decoration:line-through}
+.gnote{font-size:13px;color:var(--muted)}
+.gbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.progress{flex:1;min-width:180px;display:flex;gap:10px;align-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.track{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.fill{height:100%;background:var(--sea);width:0;transition:width .2s}
+.ghost{font:inherit;font-size:13px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+textarea{width:100%;font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);resize:vertical;min-height:72px}
+
+/* spots */
+.controls{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.search{display:flex;gap:8px;align-items:center}
+.search label{font-size:13px;color:var(--muted);white-space:nowrap}
+input[type=search]{flex:1;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row > span{font-size:13px;color:var(--muted);min-width:64px}
+.chip{font:inherit;font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--sea);border-color:var(--sea);color:var(--surface)}
+.count{font-size:13px;color:var(--muted)}
+.group{display:grid;gap:10px}
+.group h3{font-size:22px;display:flex;gap:10px;align-items:baseline}
+.group h3 small{font-family:var(--body);font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.card{text-align:left;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:8px;cursor:pointer}
+.card[aria-expanded="true"]{border-color:var(--sea);box-shadow:0 0 0 1px var(--sea)}
+.card .name{font-size:18px;font-weight:600}
+.card .region{font-size:13px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;padding:2px 8px;border-radius:999px;font-weight:500}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.unk{background:var(--unk-soft);color:var(--unk)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.detail{background:var(--surface);border:1px solid var(--sea);border-radius:10px;padding:18px;display:grid;gap:14px}
+.detail h3{font-size:28px}
+.facts{margin:0}
+.fact{display:grid;grid-template-columns:120px 1fr;gap:12px;padding-block:10px;border-top:1px solid var(--line)}
+.fact dt{font-size:13px;color:var(--muted);font-weight:500}
+.fact dd{margin:0;min-width:0}
+.fact dd.unk{color:var(--unk)}
+.alert{font-size:14px;background:var(--warn-soft);color:var(--warn);padding:10px 12px;border-radius:8px}
+.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
+
+footer .wrap{padding-block:48px 40px;display:grid;gap:6px;font-size:13px;color:var(--muted)}
+footer ul{margin:0;padding-left:18px}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+@media (max-width:520px){.fact{grid-template-columns:1fr;gap:2px} nav a.link{padding:6px 7px}}
+</style>
+
+<nav aria-label="페이지 메뉴">
+  <div class="wrap">
+    <a class="brand" href="#top">제주 스노클링</a>
+    <a class="link" href="#start">시작 전</a>
+    <a class="link" href="#when">언제·안전</a>
+    <a class="link" href="#gear">준비물</a>
+    <a class="link" href="#spots">장소</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3fb6bf"/>
+          <stop offset=".18" stop-color="#1c8e99"/>
+          <stop offset=".55" stop-color="#0d5763"/>
+          <stop offset="1" stop-color="#062830"/>
+        </linearGradient>
+        <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".35"/>
+          <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#bfe9ec"/>
+          <stop offset="1" stop-color="#7fd0d6"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="640" fill="url(#sea)"/>
+      <!-- 수면 -->
+      <path d="M0,0 H1200 V92 C1120,104 1060,82 980,94 C900,106 840,84 760,96 C680,108 620,86 540,96 C460,106 400,84 320,94 C240,104 160,84 80,94 C40,99 20,96 0,94 Z" fill="url(#sky)" opacity=".55"/>
+      <path d="M0,94 C80,84 160,104 240,94 C320,84 400,106 460,96 C540,86 620,108 700,96 C780,84 860,106 940,94 C1020,82 1100,104 1200,92" fill="none" stroke="#e6fbfc" stroke-opacity=".7" stroke-width="2"/>
+      <!-- 빛줄기 -->
+      <polygon points="560,94 640,94 520,640 360,640" fill="url(#ray)" opacity=".5"/>
+      <polygon points="760,94 800,94 760,640 650,640" fill="url(#ray)" opacity=".35"/>
+      <polygon points="930,94 990,94 1040,640 900,640" fill="url(#ray)" opacity=".4"/>
+      <polygon points="1080,94 1110,94 1200,600 1140,640" fill="url(#ray)" opacity=".25"/>
+      <!-- 해저 현무암 -->
+      <path d="M0,560 C90,540 150,575 240,552 C330,530 380,566 470,548 C560,532 620,570 720,550 C820,530 880,568 980,546 C1060,530 1130,556 1200,540 V640 H0 Z" fill="#041a20"/>
+      <path d="M640,566 c18,-30 60,-34 82,-8 c16,-22 52,-18 62,10 Z M1010,552 c14,-24 48,-28 66,-6 c12,-16 40,-12 46,8 Z" fill="#072a31"/>
+      <!-- 물고기 -->
+      <g fill="#a8e3e6" opacity=".55">
+        <path d="M600,380 q14,-10 28,0 q-14,10 -28,0 z M628,380 l10,-7 v14 z"/>
+        <path d="M640,404 q12,-8 24,0 q-12,8 -24,0 z M664,404 l8,-6 v12 z"/>
+        <path d="M1090,330 q-14,-10 -28,0 q14,10 28,0 z M1062,330 l-10,-7 v14 z"/>
+      </g>
+      <!-- 스노클링하는 남자 (아래에서 올려다본 실루엣, 왼쪽을 향해 엎드려 떠 있음) -->
+      <g fill="#052028">
+        <!-- 스노클 관 -->
+        <path d="M712,92 L716,58 Q718,48 728,50 L732,52 L726,90 Z"/>
+        <!-- 머리 -->
+        <ellipse cx="720" cy="124" rx="26" ry="23"/>
+        <!-- 마스크 -->
+        <rect x="688" y="112" width="24" height="22" rx="7" fill="#0b3a44"/>
+        <rect x="692" y="116" width="16" height="13" rx="5" fill="#5fc1c8" opacity=".55"/>
+        <!-- 앞으로 뻗은 팔 -->
+        <path d="M708,140 C680,150 640,150 610,146 C602,145 600,154 608,156 C640,162 684,162 714,152 Z"/>
+        <!-- 몸통 -->
+        <path d="M736,108 C780,100 860,104 912,116 C934,121 944,138 930,150 C900,166 820,164 760,152 C736,148 724,128 736,108 Z"/>
+        <!-- 다른 팔 (몸 옆) -->
+        <path d="M760,150 C790,170 830,178 860,176 C868,176 868,166 860,164 C832,162 800,156 774,142 Z" opacity=".9"/>
+        <!-- 다리 -->
+        <path d="M918,120 C960,118 1010,112 1048,104 C1056,102 1060,112 1052,116 C1012,128 962,140 924,146 Z"/>
+        <path d="M920,138 C966,146 1012,156 1046,164 C1054,166 1052,176 1044,176 C1004,172 958,164 916,152 Z"/>
+        <!-- 오리발 -->
+        <path d="M1046,100 L1112,72 L1124,96 L1056,118 Z"/>
+        <path d="M1044,162 L1118,170 L1110,196 L1040,180 Z"/>
+      </g>
+      <!-- 공기방울 -->
+      <g fill="none" stroke="#dff7f8" stroke-opacity=".7" stroke-width="1.5">
+        <circle class="bub" cx="700" cy="170" r="4"/>
+        <circle class="bub" cx="712" cy="200" r="3"/>
+        <circle class="bub" cx="694" cy="240" r="5"/>
+        <circle class="bub" cx="1100" cy="230" r="3"/>
+        <circle class="bub" cx="1116" cy="270" r="4"/>
+        <circle class="bub" cx="560" cy="460" r="3"/>
+        <circle class="bub" cx="300" cy="420" r="4"/>
+      </g>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="eyebrow">제주 초행자를 위한 실전 가이드</div>
+    <h1>제주 스노클링,<br>처음이라면 여기서 준비 끝</h1>
+    <p class="lede">숙소에서 출발해 바다에 들어가고, 씻고 나오기까지. 장소별 대여·샤워·교통·안전 정보를 한곳에 정리했어.</p>
+    <div class="stat">
+      <div class="num">3<small> / 6건</small></div>
+      <p class="cap">2025년 여름 제주 해안 물놀이 사망사고 6건 중 3건이 스노클링 중에 났어. 곽지해수욕장, 김녕리 세기알 포구, 성산일출봉 해안가.</p>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="#spots">장소 찾기</a>
+      <a class="btn" href="#gear">준비물 체크</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="block" id="start">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">STEP 1 · 시작 전</div>
+      <h2>처음 하는 사람이 가장 많이 묻는 4가지</h2>
+    </div>
+    <div class="qa">
+      <details open>
+        <summary><span class="q">Q1</span>수영을 못해도 할 수 있어?</summary>
+        <div class="a"><p>구명조끼나 튜브를 입는다는 전제로 가능해.</p><p class="rule">행동 기준: 처음엔 발이 닿는 얕은 곳, 물살이 약한 구간에서 시작해.</p></div>
+      </details>
+      <details>
+        <summary><span class="q">Q2</span>전문 투어 없이 가도 돼?</summary>
+        <div class="a"><p>장소를 잘 고르면 돼. 라이프가드가 배치되는 운영 기간과 장소부터 시작하는 게 기준이야.</p><p class="rule">행동 기준: 정식 해수욕장과 포구·갯바위 같은 야생 해변은 위험도가 달라. 처음엔 관리되는 곳으로.</p></div>
+      </details>
+      <details>
+        <summary><span class="q">Q3</span>장비 없이 맨몸으로 가도 돼?</summary>
+        <div class="a"><p>현장 대여소가 있는 곳이면 돼. 판포포구는 마스크, 오리발, 구명조끼까지 바로 빌릴 수 있어.</p><p class="rule">행동 기준: 대여소가 없는 장소라면 대여 항목도 직접 챙겨야 해. 아래 장소 탐색에서 대여 여부를 먼저 확인해.</p></div>
+      </details>
+      <details>
+        <summary><span class="q">Q4</span>렌터카 없이도 갈 수 있어?</summary>
+        <div class="a"><p>버스로 가기 좋은 곳이 있어. 판포포구는 202번 버스 '판포리' 정류장에서 걸어서 3분 이내야.</p><p class="rule">행동 기준: 장소 상세의 '교통·주차' 항목에서 정류장과 도보 시간을 확인해.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="when">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">STEP 2 · 언제, 어떻게</div>
+      <h2>시간대보다 물때가 먼저야</h2>
+      <p>같은 장소라도 물때에 따라 수심과 물살이 달라져. 출발 전에 아래 세 가지를 확인해.</p>
+    </div>
+    <div class="cond">
+      <div class="c"><span class="k">시기</span><span class="v">6월 ~ 9월</span><span class="d">스노클링하기 적합한 기간</span></div>
+      <div class="c"><span class="k">날씨</span><span class="v">맑음 · 약한 바람</span><span class="d">파도가 잔잔한 날에만 들어가</span></div>
+      <div class="c"><span class="k">물때</span><span class="v">만조 전후 1~2시간</span><span class="d">수심과 물살이 가장 안정적인 시간</span></div>
+    </div>
+    <div class="tide">
+      <svg viewBox="0 0 640 170" role="img" aria-label="하루 물때 곡선. 만조 전후 1~2시간이 추천 구간이고, 간조 때는 활동이 제한될 수 있음">
+        <rect x="160" y="14" width="160" height="120" fill="var(--ok-soft)"/>
+        <rect x="490" y="14" width="140" height="120" fill="var(--warn-soft)"/>
+        <line x1="20" y1="134" x2="630" y2="134" stroke="var(--line)" stroke-width="1"/>
+        <path d="M20,104 C80,104 140,24 240,24 C340,24 400,124 560,124 C600,124 620,118 630,112" fill="none" stroke="var(--sea)" stroke-width="3"/>
+        <circle cx="240" cy="24" r="5" fill="var(--sea)"/>
+        <circle cx="560" cy="124" r="5" fill="var(--warn)"/>
+        <text x="240" y="52" text-anchor="middle" font-size="13" fill="var(--fg)" font-family="IBM Plex Sans KR, sans-serif">만조</text>
+        <text x="240" y="156" text-anchor="middle" font-size="12" fill="var(--ok)" font-family="IBM Plex Sans KR, sans-serif">추천: 만조 ±1~2시간</text>
+        <text x="560" y="108" text-anchor="middle" font-size="13" fill="var(--fg)" font-family="IBM Plex Sans KR, sans-serif">간조</text>
+        <text x="560" y="156" text-anchor="middle" font-size="12" fill="var(--warn)" font-family="IBM Plex Sans KR, sans-serif">활동 제한 가능</text>
+      </svg>
+      <p class="muted" style="font-size:13px">개념도야. 실제 만조·간조 시각은 날짜와 장소마다 달라서 국립해양조사원 물때표로 확인해.</p>
+    </div>
+    <ul class="rules">
+      <li class="do"><span class="ic">O</span><span>수영이 서툴면 구명조끼나 튜브를 꼭 입어.</span></li>
+      <li class="do"><span class="ic">O</span><span>처음엔 발이 닿는 얕은 곳, 물살이 약한 곳에서 시작해.</span></li>
+      <li class="do"><span class="ic">O</span><span>라이프가드가 있으면 안내를 반드시 따라.</span></li>
+      <li class="dont"><span class="ic">X</span><span>다이빙 금지 구역에서 뛰어들지 마.</span></li>
+      <li class="dont"><span class="ic">X</span><span>바람이 세거나 파도가 높은 날엔 들어가지 마.</span></li>
+      <li class="dont"><span class="ic">X</span><span>안전요원 없는 포구·갯바위에 혼자 들어가지 마.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="gear">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">STEP 3 · 준비물</div>
+      <h2>뭘 챙기고, 뭘 빌릴까</h2>
+      <p>체크한 항목은 이 기기에 저장돼서 다시 열어도 남아 있어.</p>
+    </div>
+    <div class="gbar">
+      <div class="progress"><span id="gcount">0 / 12</span><div class="track"><div class="fill" id="gfill"></div></div></div>
+      <button type="button" class="ghost" id="greset">체크 초기화</button>
+    </div>
+    <div class="gear" id="gearCols"></div>
+    <p class="gnote">대여소가 없는 장소에 간다면 '대여 가능' 항목도 전부 직접 챙겨야 해.</p>
+    <div>
+      <label for="memo" class="muted" style="font-size:13px">나만의 메모 (추가로 챙길 것, 주의할 점)</label>
+      <textarea id="memo" placeholder="예: 멀미약, 여분 렌즈, 숙소 체크아웃 시간"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="spots">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">STEP 4 · 장소</div>
+      <h2>추천 스팟 6곳</h2>
+      <p>비짓제주 스노클링 검색 상위 스팟과 리뷰가 활발한 곳을 골랐어. 조사가 끝나지 않은 항목은 <b>미확인</b>으로 표시했어.</p>
+    </div>
+    <div class="controls" aria-label="검색과 필터">
+      <div class="search">
+        <label for="q">검색</label>
+        <input id="q" type="search" placeholder="장소 이름이나 지역 (예: 판포, 김녕)" autocomplete="off">
+      </div>
+      <div class="row" role="group" aria-label="지역"><span>지역</span><div class="row" id="regionChips"></div></div>
+      <div class="row" role="group" aria-label="대여 조건"><span>대여 조건</span><div class="row" id="rentChips"></div></div>
+    </div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <div id="list" class="group" style="gap:22px"></div>
+    <section id="detail" class="detail" hidden aria-live="polite"></section>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>출처</b></div>
+    <ul>
+      <li>기획서 「제주스노클링 가이드북」 HRA 19기 2조, 2026. 5. 9.</li>
+      <li>매일안전신문, 여름 제주 물놀이 사망사고 관련 보도</li>
+      <li><a href="https://www.visitjeju.net/kr/search?q=스노쿨링" target="_blank" rel="noopener">비짓제주 스노클링 검색 결과</a></li>
+    </ul>
+    <p>운영 기간·요금·대여 현황은 해마다 바뀔 수 있어. 방문 전에 마을·지자체 공지를 확인해.</p>
+  </div>
+</footer>
+
+<script>
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* 준비물 */
+const GEAR=[
+  {title:"꼭 챙길 것",badge:["필수","b-must"],items:["체력 보충용 간식","체온 유지 물품","선크림","수건","아쿠아슈즈"]},
+  {title:"필수, 현장 대여 가능",badge:["대여 가능","b-rent"],items:["스노클링 수경","오리발","스노클링 슈트","구명조끼·암튜브"]},
+  {title:"있으면 좋은 것",badge:["선택","b-opt"],items:["돗자리·파라솔","우비","방수팩"]},
+];
+let checked=store.get("snorkel-gear",[]);
+const gearCols=document.getElementById("gearCols");
+GEAR.forEach((g,gi)=>{
+  const col=document.createElement("div");col.className="gcol";
+  col.innerHTML=`<h3>${g.title}<span class="badge ${g.badge[1]}">${g.badge[0]}</span></h3>`+
+    g.items.map((it,ii)=>{const id=`g${gi}-${ii}`;return `<label for="${id}"><input type="checkbox" id="${id}" data-item="${it}"${checked.includes(it)?" checked":""}><span>${it}</span></label>`}).join("");
+  gearCols.appendChild(col);
+});
+const total=GEAR.reduce((n,g)=>n+g.items.length,0);
+function gearUpdate(){
+  checked=[...gearCols.querySelectorAll("input:checked")].map(i=>i.dataset.item);
+  store.set("snorkel-gear",checked);
+  document.getElementById("gcount").textContent=`${checked.length} / ${total} 준비`;
+  document.getElementById("gfill").style.width=(checked.length/total*100)+"%";
+}
+gearCols.addEventListener("change",gearUpdate);
+document.getElementById("greset").onclick=()=>{gearCols.querySelectorAll("input").forEach(i=>i.checked=false);gearUpdate();};
+gearUpdate();
+const memo=document.getElementById("memo");
+memo.value=store.get("snorkel-memo","");
+memo.addEventListener("input",()=>store.set("snorkel-memo",memo.value));
+
+/* 장소 */
+const REGIONS=["구좌(김녕)","제주 서쪽(한경·한림)","서귀포"];
+const FIELDS=[["terrain","지형·파도"],["rental","장비 대여"],["shower","샤워 시설"],["access","교통·주차"],["safety","안전 관리"]];
+const PLACES=[
+  {id:"conan",name:"코난비치",region:"구좌(김녕)",aka:"김녕",rent:"unk"},
+  {id:"segial",name:"세기알해변",region:"구좌(김녕)",aka:"김녕 세기알 포구",rent:"unk",
+   alert:"2025년 여름 스노클링 사망사고가 난 '김녕리 세기알 포구'와 같은 지역이야. 안전요원 배치 여부를 확인하기 전에는 초보자 혼자 들어가지 마."},
+  {id:"panpo",name:"판포포구",region:"제주 서쪽(한경·한림)",aka:"한경 판포리",rent:"ok",detailed:true,
+   terrain:"방파제가 바다를 둥글게 감싸 파도가 잔잔해서 '천연 바다 수영장'으로 불려. 바닥이 고운 모래라 발 다칠 위험이 적고, 초보자나 아이 동반 가족에게 맞아. 물고기를 보려면 방파제 쪽 돌 틈 근처로 가.",
+   rental:"포구 바로 앞에 대여점이 몰려 있고, 판포리 청년회가 운영하는 대여소도 있어. 구명조끼·튜브·마스크·오리발을 현장에서 바로 빌릴 수 있어서 몸만 가도 돼.",
+   shower:"포구 건너편 카페와 전용 샤워장이 여러 곳 있어. 5,000원이면 온수 샤워에 수건·세면도구까지 제공돼.",
+   access:"202번 버스 '판포리' 정류장에서 내려 걸어서 3분 이내. 자가용은 성수기·주말에 매우 붐비니 오전 일찍 가. 주차는 포구 주변 도로변 허용 구간이나 인근 공터.",
+   safety:"6월~8월 말 집중 운영, 마을 청년회가 관리해. 7월 1일~8월 31일엔 라이프가드가 배치돼. 다이빙 금지 구역이 정해져 있으니 안전요원 안내를 꼭 따라."},
+  {id:"wollyeong",name:"월령포구",region:"제주 서쪽(한경·한림)",aka:"한림 월령리",rent:"unk"},
+  {id:"doribbal",name:"도리빨해변",region:"서귀포",aka:"",rent:"unk"},
+  {id:"gangjeong",name:"강정천",region:"서귀포",aka:"강정",rent:"unk"},
+];
+const saved=store.get("snorkel-filter",{});
+const state={q:"",region:saved.region||"전체",rent:saved.rent||"전체",open:"panpo"};
+function chips(el,opts,key){
+  el.innerHTML="";
+  opts.forEach(o=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=o;
+    b.setAttribute("aria-pressed",state[key]===o);
+    b.onclick=()=>{state[key]=o;store.set("snorkel-filter",{region:state.region,rent:state.rent});render();};
+    el.appendChild(b);});
+}
+const norm=s=>s.replace(/\s/g,"").toLowerCase();
+function matches(p){
+  if(state.region!=="전체"&&p.region!==state.region)return false;
+  if(state.rent==="현장 대여 확인됨"&&p.rent!=="ok")return false;
+  if(state.rent==="대여 미확인"&&p.rent!=="unk")return false;
+  if(state.q&&!norm(p.name+p.region+p.aka).includes(norm(state.q)))return false;
+  return true;
+}
+function tags(p){
+  return (p.rent==="ok"?'<span class="tag ok">현장 대여 가능</span>':'<span class="tag unk">대여 미확인</span>')+
+    (p.detailed?'<span class="tag ok">상세 조사 완료</span>':'<span class="tag unk">상세 미확인</span>')+
+    (p.alert?'<span class="tag warn">주의</span>':'');
+}
+function render(){
+  chips(document.getElementById("regionChips"),["전체",...REGIONS],"region");
+  chips(document.getElementById("rentChips"),["전체","현장 대여 확인됨","대여 미확인"],"rent");
+  const hits=PLACES.filter(matches);
+  document.getElementById("count").textContent=`${PLACES.length}곳 중 ${hits.length}곳 표시`;
+  const list=document.getElementById("list");list.innerHTML="";
+  if(!hits.length)list.innerHTML='<div class="empty">조건에 맞는 장소가 없어. 검색어나 필터를 바꿔봐.</div>';
+  REGIONS.forEach(r=>{
+    const ps=hits.filter(p=>p.region===r);if(!ps.length)return;
+    const g=document.createElement("div");g.className="group";
+    g.innerHTML=`<h3>${r}<small>${ps.length}곳</small></h3><div class="grid"></div>`;
+    ps.forEach(p=>{
+      const c=document.createElement("button");c.type="button";c.className="card";
+      c.setAttribute("aria-expanded",state.open===p.id);
+      c.innerHTML=`<div class="name">${p.name}</div><div class="region">${p.region}${p.aka?" · "+p.aka:""}</div><div class="tags">${tags(p)}</div>`;
+      c.onclick=()=>{state.open=state.open===p.id?null:p.id;render();
+        if(state.open)document.getElementById("detail").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"});};
+      g.querySelector(".grid").appendChild(c);
+    });
+    list.appendChild(g);
+  });
+  const d=document.getElementById("detail");const p=PLACES.find(x=>x.id===state.open);
+  if(!p||!hits.includes(p)){d.hidden=true;return;}
+  d.hidden=false;
+  d.innerHTML=`<div><div class="eyebrow">${p.region}</div><h3>${p.name}</h3></div>
+    ${p.alert?`<p class="alert">${p.alert}</p>`:""}
+    <dl class="facts">${FIELDS.map(([k,l])=>`<div class="fact"><dt>${l}</dt><dd class="${p[k]?"":"unk"}">${p[k]||"미확인 · 조사 필요"}</dd></div>`).join("")}</dl>`;
+}
+document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value.trim();render();});
+render();
+</script>
